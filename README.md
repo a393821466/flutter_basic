@@ -37,24 +37,24 @@
 
 - 在状态管理内使用数据模型的泛型类就报错了,子分类渲染不出来。去掉泛型类是可以渲染的，只不过感觉这样不稳定。如下图:
 
-![报错](https://github.com/a393821466/flutter_basic/images/0.png)
+![报错](https://github.com/a393821466/flutter_basic/tree/master/images0.png)
 
 - 状态管理的变量加入数据模型的泛型。如下图:
 
-![加入泛型类](https://github.com/a393821466/flutter_basic/images/1.png)
+![加入泛型类](https://github.com/a393821466/flutter_basic/tree/master/images1.png)
 
 - 子分类的数据模型。如下图:
 
-![model类](https://github.com/a393821466/flutter_basic/images/2.png)
+![model类](https://github.com/a393821466/flutter_basic/tree/master/images2.png)
 
 - 头文件使用provider状态管理。如下图
 
-![provider](https://github.com/a393821466/flutter_basic/images/3.png)
+![provider](https://github.com/a393821466/flutter_basic/tree/master/images3.png)
 
 - 子分类数据Widget。如下图 （具体文件目录lib/pages/classifs_page.dart）
 
-![子分类](https://github.com/a393821466/flutter_basic/images/4.png)
+![子分类](https://github.com/a393821466/flutter_basic/tree/master/images4.png)
 
 - 子分类文字渲染。如下图  （具体文件目录lib/pages/classifs_page.dart）
 
-![文字渲染](https://github.com/a393821466/flutter_basic/images/5.png)
+![文字渲染](https://github.com/a393821466/flutter_basic/tree/master/images5.png)
