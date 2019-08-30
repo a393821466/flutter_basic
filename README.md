@@ -31,7 +31,7 @@
 
 [https://easy-mock.com/mock/5d6109a5825d2b57ed75bbd6/example_copy/categoryList](https://easy-mock.com/mock/5d6109a5825d2b57ed75bbd6/example_copy/categoryList)
 
-- 在状态管理内使用数据模型的泛型类就报错了,子分类渲染不出来。去掉泛型类是可以渲染的，只不过感觉这样不稳定。如下图:
+- 在状态管理内使用数据模型的泛型类就报错了,子分类渲染不出来。去掉泛型类是可以渲染的，只不过感觉这样不稳定。报错如下图:
 
 ![报错](https://github.com/a393821466/flutter_basic/blob/master/images/0.png)
 
