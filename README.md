@@ -27,9 +27,9 @@
 
 - 在写分类列表的时候，一开始本来打算跟着用provide，但是去github看了一下。好几个月都没更新过了。上网查了一下。听说谷歌推荐使用provider。然后就使用provider了。
 
-- 这是分类api。如下图
+- 这是分类api。如下链接
 
-[分类api链接](https://easy-mock.com/mock/5d6109a5825d2b57ed75bbd6/example_copy/categoryList)
+[https://easy-mock.com/mock/5d6109a5825d2b57ed75bbd6/example_copy/categoryList](https://easy-mock.com/mock/5d6109a5825d2b57ed75bbd6/example_copy/categoryList)
 
 - 在状态管理内使用数据模型的泛型类就报错了,子分类渲染不出来。去掉泛型类是可以渲染的，只不过感觉这样不稳定。如下图:
 
