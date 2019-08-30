@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../pages/home_page.dart';
-import '../pages/classifs_page.dart';
-import '../pages/shopcar_page.dart';
-import '../pages/my_page.dart';
+import '../../pages/home_page.dart';
+import '../../pages/classifs_page.dart';
+import '../../pages/shopcar_page.dart';
+import '../../pages/my_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 自定义数据

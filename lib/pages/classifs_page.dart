@@ -13,38 +13,66 @@ class ClassifsPage extends StatefulWidget {
 }
 
 class _ClassifsPageState extends State<ClassifsPage> {
+  List list = [];
+
+  @override
+  void initState() {
+    _sendClassifyNavigatorList();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('${widget.title}')),
       body: Center(
-        child: Container(
-          child: Row(
-            children: <Widget>[
-              LeftNavigatorList(),
-              Column(
-                children: <Widget>[SubNavigator()],
-              )
-            ],
-          ),
-        ),
+        child: _getListWidget()
       ),
     );
+  }
+  Widget _getListWidget(){
+    if(list.length>0){
+      return Container(
+        child: Row(
+          children: <Widget>[
+            LeftNavigatorList(navigatorList:list),
+            Column(
+              children: <Widget>[SubNavigator()],
+            )
+          ],
+        ),
+      );
+    }else{
+      return Container(
+        child: CircularProgressIndicator(),
+      );
+    }
+  }
+  //发送http请求
+  void _sendClassifyNavigatorList() async {
+    await http_get('classifyApi').then((res) {
+      var data = res['data'];
+      ClassifyListModel classifyData = ClassifyListModel.formJson(data);
+      setState(() {
+        list = classifyData.data;
+      });
+      //进入类别自动触发索引
+      Provider.of<ClassifyStore>(context).classIfyFunc(list[0].bxMallSubDto);
+    });
   }
 }
 
 // 左边导航
 class LeftNavigatorList extends StatefulWidget {
+  List navigatorList=[];
+  LeftNavigatorList({Key key,this.navigatorList}):super(key:key);
   @override
   _LeftNavigatorListState createState() => _LeftNavigatorListState();
 }
 
 class _LeftNavigatorListState extends State<LeftNavigatorList> {
-  List list = [];
   int currentIndex = 0;
   @override
   void initState() {
-    _sendClassifyNavigatorList();
     super.initState();
   }
 
@@ -55,7 +83,7 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
       decoration: BoxDecoration(
           border: Border(right: BorderSide(width: 1, color: Colors.black12))),
       child: ListView.builder(
-        itemCount: list.length,
+        itemCount: widget.navigatorList.length,
         itemBuilder: (BuildContext context, int index) {
           return getSingleNavigator(index);
         },
@@ -71,7 +99,7 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
         setState(() {
           currentIndex = index;
         });
-        var subNavigatorList = list[index].bxMallSubDto;
+        var subNavigatorList = widget.navigatorList[index].bxMallSubDto;
         Provider.of<ClassifyStore>(context).classIfyFunc(subNavigatorList);
       },
       child: Container(
@@ -85,24 +113,13 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
           ),
         ),
         child: Text(
-          list[index].mallCategoryName,
+          widget.navigatorList[index].mallCategoryName,
           style: TextStyle(
             fontSize: ScreenUtil().setSp(28),
           ),
         ),
       ),
     );
-  }
-
-//发送http请求
-  void _sendClassifyNavigatorList() async {
-    await http_get('classifyApi').then((res) {
-      var data = res['data'];
-      ClassifyListModel classifyData = ClassifyListModel.formJson(data);
-      setState(() {
-        list = classifyData.data;
-      });
-    });
   }
 }
 
