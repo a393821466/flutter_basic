@@ -50,3 +50,13 @@ class BxMallSubDtoModel {
         'comments': comments,
       };
 }
+
+// class BxMallSubListModel {
+//   List<BxMallSubDtoModel> data;
+//   BxMallSubListModel(this.data);
+
+//   factory BxMallSubListModel.fromJson(List json) {
+//     return BxMallSubListModel(
+//         json.map((item) => BxMallSubDtoModel.fromJson(item)).toList());
+//   }
+// }

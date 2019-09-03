@@ -1,12 +1,7 @@
 import 'package:dio/dio.dart';
 import 'dart:io';
 import 'dart:async';
-
-Map httpUrl = {
-  'getHomeBanner':'https://easy-mock.com/mock/5d6109a5825d2b57ed75bbd6/example_copy/homebanner',
-  'classifyApi':
-      'https://easy-mock.com/mock/5d6109a5825d2b57ed75bbd6/example_copy/categoryList'
-};
+import '../config/http_url.dart';
 
 Future http_get(url, [query]) async {
   try {
@@ -15,9 +10,9 @@ Future http_get(url, [query]) async {
     dio.options.contentType =
         ContentType.parse("application/x-www-form-urlencoded");
     if (query == null) {
-      response = await Dio().get(httpUrl[url]);
+      response = await Dio().get(urlConfig[url]);
     } else {
-      response = await Dio().get(httpUrl[url], queryParameters: query);
+      response = await Dio().get(urlConfig[url], queryParameters: query);
     }
     if (response.statusCode == 200) {
       return response.data;

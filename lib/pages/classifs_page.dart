@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import '../config/http_utils.dart';
 import '../models/classifyModel.dart';
 import '../store/classify_store.dart';
+import '../components/classify/left_navigator.dart';
+import '../components/classify/sub_navigator.dart';
+import '../models/categoryModel.dart';
 
 class ClassifsPage extends StatefulWidget {
   final String title;
@@ -20,33 +23,37 @@ class _ClassifsPageState extends State<ClassifsPage> {
     _sendClassifyNavigatorList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('${widget.title}')),
-      body: Center(
-        child: _getListWidget()
-      ),
+      body: Center(child: _getListWidget()),
     );
   }
-  Widget _getListWidget(){
-    if(list.length>0){
+
+  Widget _getListWidget() {
+    if (list.length > 0) {
       return Container(
         child: Row(
           children: <Widget>[
-            LeftNavigatorList(navigatorList:list),
+            LeftNavigatorList(navigatorList: list),
             Column(
-              children: <Widget>[SubNavigator()],
+              children: <Widget>[
+                SubNavigator(),
+                CategoryGoodsList(),
+              ],
             )
           ],
         ),
       );
-    }else{
+    } else {
       return Container(
         child: CircularProgressIndicator(),
       );
     }
   }
+
   //发送http请求
   void _sendClassifyNavigatorList() async {
     await http_get('classifyApi').then((res) {
@@ -61,117 +68,107 @@ class _ClassifsPageState extends State<ClassifsPage> {
   }
 }
 
-// 左边导航
-class LeftNavigatorList extends StatefulWidget {
-  List navigatorList=[];
-  LeftNavigatorList({Key key,this.navigatorList}):super(key:key);
+// 商品分类的商品列表
+class CategoryGoodsList extends StatefulWidget {
   @override
-  _LeftNavigatorListState createState() => _LeftNavigatorListState();
+  _CategoryGoodsListState createState() => _CategoryGoodsListState();
 }
 
-class _LeftNavigatorListState extends State<LeftNavigatorList> {
-  int currentIndex = 0;
+class _CategoryGoodsListState extends State<CategoryGoodsList> {
+  List categoryData = [];
   @override
   void initState() {
+    _getGoodList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenUtil().setWidth(160),
-      decoration: BoxDecoration(
-          border: Border(right: BorderSide(width: 1, color: Colors.black12))),
+      width: ScreenUtil().setWidth(590.0),
+      height: ScreenUtil().setHeight(980.0),
       child: ListView.builder(
-        itemCount: widget.navigatorList.length,
+        itemCount: categoryData.length,
         itemBuilder: (BuildContext context, int index) {
-          return getSingleNavigator(index);
+          return _listItem(index);
         },
       ),
     );
   }
 
-  Widget getSingleNavigator(int index) {
-    bool isClick = false;
-    isClick = (index == currentIndex) ? true : false;
-    return InkWell(
-      onTap: () {
-        setState(() {
-          currentIndex = index;
-        });
-        var subNavigatorList = widget.navigatorList[index].bxMallSubDto;
-        Provider.of<ClassifyStore>(context).classIfyFunc(subNavigatorList);
-      },
-      child: Container(
-        height: ScreenUtil().setHeight(100),
-        padding: EdgeInsets.all(12),
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-          color: isClick ? Colors.grey[200] : Colors.white,
-          border: Border(
-            bottom: BorderSide(color: Colors.grey[200], width: 1),
-          ),
-        ),
-        child: Text(
-          widget.navigatorList[index].mallCategoryName,
-          style: TextStyle(
-            fontSize: ScreenUtil().setSp(28),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/*
-**子导航
-**/
-class SubNavigator extends StatefulWidget {
-  @override
-  _SubNavigatorState createState() => _SubNavigatorState();
-}
-
-class _SubNavigatorState extends State<SubNavigator> {
-  @override
-  Widget build(BuildContext context) {
-    List getProviderData = Provider.of<ClassifyStore>(context).classIfyListData;
+  // 图片
+  Widget _goodsImage(int index) {
     return Container(
-      height: ScreenUtil().setHeight(80),
-      width: ScreenUtil().setWidth(590),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(color: Colors.black12, width: 1),
-        ),
-      ),
-      child: Container(
-        height: ScreenUtil().setHeight(100),
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: getProviderData.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _subNavigatorText(getProviderData[index]);
-          },
-        ),
+      width: ScreenUtil().setWidth(200.0),
+      padding: EdgeInsets.all(8),
+      child: Image.network(categoryData[index].images, fit: BoxFit.fill),
+    );
+  }
+
+  Widget _goodsName(int index) {
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      width: ScreenUtil().setWidth(370.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            categoryData[index].goodsName,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: ScreenUtil().setSp(28.0)),
+          ),
+          SizedBox(height: ScreenUtil().setHeight(30.0)),
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: Text('价格￥:${categoryData[index].presentPrice}',
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: ScreenUtil().setSp(30.0))),
+              ),
+              SizedBox(height: ScreenUtil().setHeight(30.0)),
+              Text(
+                '￥${categoryData[index].oriPrice}',
+                style: TextStyle(
+                    decoration: TextDecoration.lineThrough,
+                    fontSize: ScreenUtil().setSp(26.0)),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
 
-  Widget _subNavigatorText(Map<String, dynamic> item) {
+  Widget _listItem(int index) {
     return InkWell(
       onTap: () {},
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: 10,
-          left: 15,
-          right: 10,
-        ),
-        child: Text(
-          item['mallSubName'],
-          style:
-              TextStyle(fontSize: ScreenUtil().setSp(26), color: Colors.grey),
+      child: Container(
+        padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(width: 1.0, color: Colors.black12),
+            )),
+        child: Row(
+          children: <Widget>[
+            _goodsImage(index),
+            _goodsName(index),
+          ],
         ),
       ),
     );
+  }
+
+  void _getGoodList() async {
+    var data = {'categoryId': '1', 'categorySubId': '', 'page': 1};
+    await http_get('categoryGoodList', data).then((res) {
+      var das = res['data']['categoryData'];
+      CategoryListModel _list = CategoryListModel.fromJson(das);
+      setState(() {
+        categoryData = _list.data;
+      });
+    });
   }
 }
