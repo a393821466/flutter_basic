@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
+import '../../config/http_utils.dart';
+import '../../models/categoryModel.dart';
 import '../../store/classify_store.dart';
 
 // 商品分类的商品列表
@@ -10,25 +14,76 @@ class CategoryGoodsList extends StatefulWidget {
 }
 
 class _CategoryGoodsListState extends State<CategoryGoodsList> {
+  EasyRefreshController _controller;
+  // 底部回弹
+  bool _bottomBouncing = true;
+  // 开启加载
+  bool _enableLoad = true;
+  // 开启无限加载
+  bool _enableInfiniteLoad=false;
+  // 
+  var scrollContorller=new ScrollController();
   @override
   void initState() {
+    _controller = EasyRefreshController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     List categoryDataList = Provider.of<ClassifyStore>(context).getCategoryData;
+    try {
+      // 切换之后
+      if(Provider.of<ClassifyStore>(context).page==1){
+        scrollContorller.jumpTo(0.0);
+        _controller.finishLoad(noMore: false);
+      }
+    } catch (e) {
+      print('进入页面第一次初始化${e}');
+    }
     if (categoryDataList.length != 0) {
       return Expanded(
         //继承flexible
         child: Container(
           width: ScreenUtil().setWidth(590.0),
-          child: ListView.builder(
-            itemCount: categoryDataList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _listItem(categoryDataList, index);
-            },
-          ),
+          child: EasyRefresh(
+            enableControlFinishRefresh: false,
+            enableControlFinishLoad: true,
+            bottomBouncing: _bottomBouncing,
+            controller: _controller,
+            footer: ClassicalFooter(
+              enableInfiniteLoad:_enableInfiniteLoad,
+              loadedText:'加载完成',
+              loadText:'松开回弹..',
+              loadReadyText:'松开加载更多..',
+              loadingText:'加载中..',
+              noMoreText:Provider.of<ClassifyStore>(context).getStatus,
+              showInfo:false
+            ),
+            onLoad:_enableLoad? () async {
+              int totals=Provider.of<ClassifyStore>(context).getPagesTotao;
+              int pages=Provider.of<ClassifyStore>(context).getPagesIndex;
+              if(pages<=totals){
+                await _getAddCategory();
+              }
+              Provider.of<ClassifyStore>(context).changeNoMore('暂无内容..');
+              _controller.finishLoad(noMore: pages==totals);
+              // _controller.finishLoad(noMore: Provider.of<ClassifyStore>(context).getStatus);
+              // await Future.delayed(Duration(seconds: 2), () {
+              //   print('onLoad');
+              //   setState(() {
+              //     _count += 10;
+              //   });
+              // });
+            }:null,
+            child: ListView.builder(
+              controller: scrollContorller,
+              itemCount: categoryDataList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _listItem(categoryDataList, index);
+              },
+            ),
+          )
         ),
       );
     } else {
@@ -96,5 +151,24 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
         ),
       ),
     );
+  }
+  void _getAddCategory(){
+    Provider.of<ClassifyStore>(context).addPage();
+    var data = {
+      'categoryId': Provider.of<ClassifyStore>(context).getLeftNavigatorId,
+      'categorySubId': '',
+      'page': Provider.of<ClassifyStore>(context).getPagesIndex,
+      'pageSize':5
+    };
+    print(Provider.of<ClassifyStore>(context).getPagesTotao);
+    http_get('categoryGoodList', data).then((res) {
+      var das = res['data']['categoryData'];
+      CategoryListModel goodList = CategoryListModel.fromJson(das);
+      if (goodList.data == null) {
+        Provider.of<ClassifyStore>(context).changeNoMore('暂无内容..');
+      } else {
+        Provider.of<ClassifyStore>(context).addGoodsList(goodList.data);
+      }
+    });
   }
 }

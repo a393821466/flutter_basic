@@ -78,10 +78,12 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
     var data = {
       'categoryId': categoryId == null ? '1' : categoryId,
       'categorySubId': '',
-      'page': 1
+      'page': 1,
+      'pageSize':5
     };
     http_get('categoryGoodList', data).then((res) {
       var das = res['data']['categoryData'];
+      Provider.of<ClassifyStore>(context).totalPage(res['data']['allPage']);
       CategoryListModel goodList = CategoryListModel.fromJson(das);
       Provider.of<ClassifyStore>(context).getGoodsList(goodList.data);
     });

@@ -49,6 +49,7 @@ class _SubNavigatorState extends State<SubNavigator> {
         _getGoodList(item['categorySubId']);
       },
       child: Container(
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
@@ -60,7 +61,6 @@ class _SubNavigatorState extends State<SubNavigator> {
           ),
         ),
         padding: EdgeInsets.only(
-          top: 10,
           left: 15,
           right: 10,
         ),
@@ -68,7 +68,7 @@ class _SubNavigatorState extends State<SubNavigator> {
           item['mallSubName'],
           style: TextStyle(
               fontSize: ScreenUtil().setSp(26),
-              color: isClick ? Theme.of(context).primaryColor : Colors.black54),
+              color: isClick ? Theme.of(context).primaryColor : Colors.black54),textAlign: TextAlign.center,
         ),
       ),
     );
@@ -78,10 +78,12 @@ class _SubNavigatorState extends State<SubNavigator> {
     var data = {
       'categoryId': Provider.of<ClassifyStore>(context).getLeftNavigatorId,
       'categorySubId': categorySubId,
-      'page': 1
+      'page': 1,
+      'pageSize':5
     };
     http_get('categoryGoodList', data).then((res) {
       var das = res['data']['categoryData'];
+      Provider.of<ClassifyStore>(context).totalPage(res['data']['allPage']);
       CategoryListModel goodList = CategoryListModel.fromJson(das);
       if (goodList.data == null) {
         Provider.of<ClassifyStore>(context).getGoodsList([]);

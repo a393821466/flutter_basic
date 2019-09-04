@@ -10,10 +10,18 @@ class ClassifyStore with ChangeNotifier {
   List<CategoryModel> categoryData = [];
   // 存储左边导航Id
   String leftNavigatorId = '1';
-
+  // 列表页码
+  int page=1;
+  // 总页数
+  int total=0;
+  // 列表无数据的时候
+  String noMoreStatus='';
   // 获取子类导航
   classIfyFunc(List list, String id) {
     childIndex = 0;
+    page=1;
+    print(page);
+    noMoreStatus='';
     var das = {
       'mallSubId': 'eb68FC6D-689C-f4ce-7BbE-A82bb8dFF423',
       'mallCategoryId': list[0]['mallCategoryId'],
@@ -34,6 +42,8 @@ class ClassifyStore with ChangeNotifier {
   // 改变子类导航索引
   changeCurrentIndex(int index) {
     childIndex = index;
+    page=1;
+    noMoreStatus='';
     notifyListeners();
   }
 
@@ -42,7 +52,24 @@ class ClassifyStore with ChangeNotifier {
     categoryData = list;
     notifyListeners();
   }
-
+  // 上拉加载添加数据
+  addGoodsList(List<CategoryModel> list) {
+    categoryData.addAll(list);
+    notifyListeners();
+  }
+  // 页码管理
+  addPage(){
+    page++;
+  }
+  // 总页数
+  totalPage(int totalPages){
+    total=totalPages;
+  }
+  // 改变
+  changeNoMore(String text){
+    noMoreStatus=text;
+    notifyListeners();
+  }
   // 子导航数据
   get getClassifyData => classIfyListData;
   // 子导航索引值
@@ -51,4 +78,10 @@ class ClassifyStore with ChangeNotifier {
   get getCategoryData => categoryData;
   // 左边导航id
   get getLeftNavigatorId => leftNavigatorId;
+  // 状态
+  get getStatus => noMoreStatus;
+  // 页码获取
+  get getPagesIndex => page;
+  // 总页数获取
+  get getPagesTotao => total;
 }
