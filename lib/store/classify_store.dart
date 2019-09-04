@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
-// import '../models/classifyModel.dart';
+import '../models/categoryModel.dart';
 
 class ClassifyStore with ChangeNotifier {
+  // 左边导航数据
   List classIfyListData = [];
+  // 子类导航索引
+  int childIndex = 0;
+  // 列表内容
+  List<CategoryModel> categoryData = [];
+  // 存储左边导航Id
+  String leftNavigatorId = '1';
 
-  classIfyFunc(List list) {
+  // 获取子类导航
+  classIfyFunc(List list, String id) {
+    childIndex = 0;
     var das = {
       'mallSubId': 'eb68FC6D-689C-f4ce-7BbE-A82bb8dFF423',
       'mallCategoryId': list[0]['mallCategoryId'],
@@ -17,9 +26,29 @@ class ClassifyStore with ChangeNotifier {
     } else {
       list.insert(0, das);
     }
+    leftNavigatorId = id;
     classIfyListData = list;
     notifyListeners();
   }
 
+  // 改变子类导航索引
+  changeCurrentIndex(int index) {
+    childIndex = index;
+    notifyListeners();
+  }
+
+  // 获取导航列表内容
+  getGoodsList(List<CategoryModel> list) {
+    categoryData = list;
+    notifyListeners();
+  }
+
+  // 子导航数据
   get getClassifyData => classIfyListData;
+  // 子导航索引值
+  get getCurrentIndex => childIndex;
+  // 导航列表内容
+  get getCategoryData => categoryData;
+  // 左边导航id
+  get getLeftNavigatorId => leftNavigatorId;
 }

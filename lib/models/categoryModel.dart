@@ -5,7 +5,7 @@ class CategoryModel {
   final double oriPrice;
   final double presentPrice;
   final String categoryId;
-  final int categorySubId;
+  final String categorySubId;
   final String images;
   final String description;
   CategoryModel(

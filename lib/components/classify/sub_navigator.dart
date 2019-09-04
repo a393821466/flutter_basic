@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import '../../models/categoryModel.dart';
 import '../../store/classify_store.dart';
+import '../../config/http_utils.dart';
 
 /*
 **子导航
@@ -30,17 +32,33 @@ class _SubNavigatorState extends State<SubNavigator> {
           scrollDirection: Axis.horizontal,
           itemCount: getProviderData.length,
           itemBuilder: (BuildContext context, int index) {
-            return _subNavigatorText(getProviderData[index]);
+            return _subNavigatorText(index, getProviderData[index]);
           },
         ),
       ),
     );
   }
 
-  Widget _subNavigatorText(Map<String, dynamic> item) {
+  Widget _subNavigatorText(int index, Map<String, dynamic> item) {
+    bool isClick = false;
+    int idx = Provider.of<ClassifyStore>(context).getCurrentIndex;
+    isClick = (index == idx) ? true : false;
     return InkWell(
-      onTap: () {},
-      child: Padding(
+      onTap: () {
+        Provider.of<ClassifyStore>(context).changeCurrentIndex(index);
+        _getGoodList(item['categorySubId']);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              width: 2,
+              color: isClick
+                  ? Theme.of(context).primaryColor
+                  : Color.fromRGBO(255, 255, 255, 0),
+            ),
+          ),
+        ),
         padding: EdgeInsets.only(
           top: 10,
           left: 15,
@@ -49,9 +67,27 @@ class _SubNavigatorState extends State<SubNavigator> {
         child: Text(
           item['mallSubName'],
           style: TextStyle(
-              fontSize: ScreenUtil().setSp(26), color: Colors.black54),
+              fontSize: ScreenUtil().setSp(26),
+              color: isClick ? Theme.of(context).primaryColor : Colors.black54),
         ),
       ),
     );
+  }
+
+  void _getGoodList(String categorySubId) {
+    var data = {
+      'categoryId': Provider.of<ClassifyStore>(context).getLeftNavigatorId,
+      'categorySubId': categorySubId,
+      'page': 1
+    };
+    http_get('categoryGoodList', data).then((res) {
+      var das = res['data']['categoryData'];
+      CategoryListModel goodList = CategoryListModel.fromJson(das);
+      if (goodList.data == null) {
+        Provider.of<ClassifyStore>(context).getGoodsList([]);
+      } else {
+        Provider.of<ClassifyStore>(context).getGoodsList(goodList.data);
+      }
+    });
   }
 }

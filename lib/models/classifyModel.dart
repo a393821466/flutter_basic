@@ -31,21 +31,21 @@ class ClassifyListModel {
 
 class BxMallSubDtoModel {
   String mallSubId;
-  String mallCategoryId;
+  String categorySubId;
   String mallSubName;
   String comments;
 
   BxMallSubDtoModel(
-      {this.mallSubId, this.mallCategoryId, this.mallSubName, this.comments});
+      {this.mallSubId, this.categorySubId, this.mallSubName, this.comments});
 
   BxMallSubDtoModel.fromJson(Map<String, dynamic> json)
       : mallSubId = json['mallSubId'],
-        mallCategoryId = json['mallCategoryId'],
+        categorySubId = json['categorySubId'],
         mallSubName = json['mallSubName'],
         comments = json['comments'];
   Map<String, dynamic> toJson() => {
         'mallSubId': mallSubId,
-        'mallCategoryId': mallCategoryId,
+        'mallCategoryId': categorySubId,
         'mallSubName': mallSubName,
         'comments': comments,
       };

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../store/classify_store.dart';
+import '../../models/categoryModel.dart';
+import '../../config/http_utils.dart';
 
 // 左边导航
 class LeftNavigatorList extends StatefulWidget {
@@ -15,6 +17,7 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
   int currentIndex = 0;
   @override
   void initState() {
+    _getGoodList();
     super.initState();
   }
 
@@ -41,8 +44,14 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
         setState(() {
           currentIndex = index;
         });
+        if (isClick) {
+          return;
+        }
         var subNavigatorList = widget.navigatorList[index].bxMallSubDto;
-        Provider.of<ClassifyStore>(context).classIfyFunc(subNavigatorList);
+        String categoryId = widget.navigatorList[index].mallCategoryId;
+        Provider.of<ClassifyStore>(context)
+            .classIfyFunc(subNavigatorList, categoryId);
+        _getGoodList(categoryId: categoryId);
       },
       child: Container(
         height: ScreenUtil().setHeight(100),
@@ -62,5 +71,19 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
         ),
       ),
     );
+  }
+
+  // 左边请求点击请求
+  void _getGoodList({String categoryId}) {
+    var data = {
+      'categoryId': categoryId == null ? '1' : categoryId,
+      'categorySubId': '',
+      'page': 1
+    };
+    http_get('categoryGoodList', data).then((res) {
+      var das = res['data']['categoryData'];
+      CategoryListModel goodList = CategoryListModel.fromJson(das);
+      Provider.of<ClassifyStore>(context).getGoodsList(goodList.data);
+    });
   }
 }

@@ -1,8 +1,7 @@
-const baseUrl = 'https://easy-mock.com/mock/';
+const baseUrl = 'http://66520.wang/mock/';
 
 const urlConfig = {
-  "getHomeBanner": baseUrl + "5d6109a5825d2b57ed75bbd6/example_copy/homebanner",
-  "classifyApi": baseUrl + "5d6109a5825d2b57ed75bbd6/example_copy/categoryList",
-  "categoryGoodList":
-      baseUrl + "5d6109a5825d2b57ed75bbd6/example_copy/CategoryGoodList"
+  "getHomeBanner": baseUrl + "5d6f3c4e1934679bc56140bd/HomeBanner",
+  "classifyApi": baseUrl + "5d6f3c4e1934679bc56140bd/CategoryList",
+  "categoryGoodList": baseUrl + "5d6f3c4e1934679bc56140bd/CategoryGoodList"
 };
