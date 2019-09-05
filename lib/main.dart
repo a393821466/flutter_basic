@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import './components/common/bottom_navigators.dart';
+import './components/common/navigator_list.dart';
 import 'package:provider/provider.dart';
 import './store/classify_store.dart';
-
+import './store/shop_car_store.dart';
 main() {
   Provider.debugCheckInvalidValueType = null;
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<ClassifyStore>.value(value: ClassifyStore())
+      ChangeNotifierProvider<ClassifyStore>.value(value: ClassifyStore()),
+      ChangeNotifierProvider<ShopCarStore>.value(value:ShopCarStore())
     ],
     child: MyApp(),
   ));
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Container(
         color: Colors.grey[200],
-        child: BottomNavigators(),
+        child: NavigatorListPage(),
       ),
     );
   }

@@ -12,9 +12,21 @@ class _ShopCarPageState extends State<ShopCarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('${widget.title}')),
-      body: Center(
-        child: Text('${widget.title}'),
-      ),
+      body: Container(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 30),
+              Text('阿斯达大所大所多'),
+              SizedBox(height: 30),
+              Text('阿斯达大所大所多'),
+              SizedBox(height: 30),
+              Text('阿斯达大所大所多'),
+              SizedBox(height: 30),
+              Text('阿斯达大所大所多'),
+              SizedBox(height: 30),
+            ],
+          ),
+      )
     );
   }
 }
