@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../config/http_utils.dart';
+import '../config/http_service.dart';
 import '../models/classifyModel.dart';
 import '../store/classify_store.dart';
 import '../components/classify/left_navigator.dart';
@@ -55,7 +55,7 @@ class _ClassifsPageState extends State<ClassifsPage> {
 
   //发送http请求
   void _sendClassifyNavigatorList() async {
-    await http_get('classifyApi').then((res) {
+    await HttpUtils().get('classifyApi').then((res) {
       var data = res['data'];
       ClassifyListModel classifyData = ClassifyListModel.formJson(data);
       setState(() {

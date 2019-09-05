@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../config/http_utils.dart';
+import '../config/http_service.dart';
 import '../components/home/header_widget.dart';
 import '../components/home/swiper_banner_image.dart';
 
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage>
   }
 
   void _getbannerDataList() async {
-    await http_get('getHomeBanner').then((res) {
+    await HttpUtils().get('getHomeBanner').then((res) {
       List list = res['data'];
       setState(() {
         swiperData.addAll(list);

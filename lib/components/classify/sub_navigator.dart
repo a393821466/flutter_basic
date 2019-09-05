@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../models/categoryModel.dart';
 import '../../store/classify_store.dart';
-import '../../config/http_utils.dart';
+import '../../config/http_service.dart';
 
 /*
 **子导航
@@ -68,7 +68,8 @@ class _SubNavigatorState extends State<SubNavigator> {
           item['mallSubName'],
           style: TextStyle(
               fontSize: ScreenUtil().setSp(26),
-              color: isClick ? Theme.of(context).primaryColor : Colors.black54),textAlign: TextAlign.center,
+              color: isClick ? Theme.of(context).primaryColor : Colors.black54),
+          textAlign: TextAlign.center,
         ),
       ),
     );
@@ -79,9 +80,9 @@ class _SubNavigatorState extends State<SubNavigator> {
       'categoryId': Provider.of<ClassifyStore>(context).getLeftNavigatorId,
       'categorySubId': categorySubId,
       'page': 1,
-      'pageSize':5
+      'pageSize': 5
     };
-    http_get('categoryGoodList', data).then((res) {
+    HttpUtils().get('categoryGoodList', data: data).then((res) {
       var das = res['data']['categoryData'];
       Provider.of<ClassifyStore>(context).totalPage(res['data']['allPage']);
       CategoryListModel goodList = CategoryListModel.fromJson(das);

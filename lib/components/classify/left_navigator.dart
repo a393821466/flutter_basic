@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../store/classify_store.dart';
 import '../../models/categoryModel.dart';
-import '../../config/http_utils.dart';
+import '../../config/http_service.dart';
 
 // 左边导航
 class LeftNavigatorList extends StatefulWidget {
@@ -79,9 +79,9 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
       'categoryId': categoryId == null ? '1' : categoryId,
       'categorySubId': '',
       'page': 1,
-      'pageSize':5
+      'pageSize': 5
     };
-    http_get('categoryGoodList', data).then((res) {
+    HttpUtils().get('categoryGoodList', data: data).then((res) {
       var das = res['data']['categoryData'];
       Provider.of<ClassifyStore>(context).totalPage(res['data']['allPage']);
       CategoryListModel goodList = CategoryListModel.fromJson(das);
