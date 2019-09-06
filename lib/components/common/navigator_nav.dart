@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -56,14 +55,34 @@ class NavigatorListPage extends StatefulWidget {
 class _NavigatorListPageState extends State<NavigatorListPage>
     with TickerProviderStateMixin {
   int currentIndex = 0;
+
+  Animation<RelativeRect> animationTest;
+  AnimationController controllerTest;
+
   @override
   void initState() {
+    // 动画定义
+    controllerTest = new AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
+
+    animationTest = RelativeRectTween(
+            begin: RelativeRect.fromLTRB(0, 300, 0, 0),
+            end: RelativeRect.fromLTRB(0, 0, 0, 0))
+        .animate(controllerTest);
+    animationTest.addStatusListener((status) {
+      if (status == AnimationStatus.completed &&
+          Provider.of<ShopCarStore>(context).getShopCarStatus == true) {
+        controllerTest.reverse();
+      }
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+    // 销毁动画
+    controllerTest.dispose();
   }
 
   List<Widget> pages = <Widget>[
@@ -102,6 +121,7 @@ class _NavigatorListPageState extends State<NavigatorListPage>
   // 购物车导航点击事件
   _shopCarClick() {
     Provider.of<ShopCarStore>(context).changeShopCarStatus(false);
+    controllerTest.forward();
   }
 
   @override
@@ -124,19 +144,22 @@ class _NavigatorListPageState extends State<NavigatorListPage>
             children: pages,
           ),
         ),
-        Offstage(
-          offstage: Provider.of<ShopCarStore>(context).getShopCarStatus,
-          child: AnimatedOpacity(
-            opacity:
-                Provider.of<ShopCarStore>(context).getShopCarStatus ? 0.0 : 1.0,
-            duration: Duration(milliseconds: 300),
-            child: Container(
-              width: ScreenUtil().setWidth(750),
-              height: ScreenUtil().setHeight(1334),
-              child: ShopCarPage('购物车'),
-            ),
-          ),
-        )
+        PositionedTransition(
+            rect: animationTest,
+            child: AnimatedOpacity(
+              opacity: Provider.of<ShopCarStore>(context).getShopCarStatus
+                  ? 0.0
+                  : 1.0,
+              duration: Duration(milliseconds: 200),
+              child: Offstage(
+                offstage: Provider.of<ShopCarStore>(context).getShopCarStatus,
+                child: Container(
+                  width: ScreenUtil().setWidth(750),
+                  height: ScreenUtil().setHeight(1294),
+                  child: ShopCarPage('购物车'),
+                ),
+              ),
+            ))
       ],
     );
   }
