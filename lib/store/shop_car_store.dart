@@ -7,7 +7,6 @@ class ShopCarStore with ChangeNotifier {
   // 购物车显示隐藏状态改变
   changeShopCarStatus(bool flat) {
     visible = flat;
-    print(flat);
     notifyListeners();
   }
 

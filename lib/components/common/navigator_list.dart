@@ -8,6 +8,7 @@ import '../../pages/classifs_page.dart';
 import '../../pages/shopcar_page.dart';
 import '../../pages/information_page.dart';
 import '../../pages/my_page.dart';
+import './navigatorShopCar/navigator_car_widget.dart';
 
 int ICON_FONTSIZE = 48;
 
@@ -69,7 +70,7 @@ class _NavigatorListPageState extends State<NavigatorListPage>
   List<Widget> pages = <Widget>[
     HomePage('首页'),
     ClassifsPage('分类'),
-    ShopCarPage('购物车'),
+    ShopCarPage(),
     InformationPage('资讯'),
     MyPage('我的')
   ];
@@ -122,19 +123,6 @@ class _NavigatorListPageState extends State<NavigatorListPage>
           body: IndexedStack(
             index: currentIndex,
             children: pages,
-          ),
-        ),
-        Offstage(
-          offstage: Provider.of<ShopCarStore>(context).getShopCarStatus,
-          child: AnimatedOpacity(
-            opacity:
-                Provider.of<ShopCarStore>(context).getShopCarStatus ? 0.0 : 1.0,
-            duration: Duration(milliseconds: 300),
-            child: Container(
-              width: ScreenUtil().setWidth(750),
-              height: ScreenUtil().setHeight(1334),
-              child: ShopCarPage('购物车'),
-            ),
           ),
         )
       ],
