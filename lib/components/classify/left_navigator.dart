@@ -83,6 +83,7 @@ class _LeftNavigatorListState extends State<LeftNavigatorList> {
     };
     HttpUtils().get('categoryGoodList', data: data).then((res) {
       var das = res['data']['categoryData'];
+      print(res['data']['allPage']);
       Provider.of<ClassifyStore>(context).totalPage(res['data']['allPage']);
       CategoryListModel goodList = CategoryListModel.fromJson(das);
       Provider.of<ClassifyStore>(context).getGoodsList(goodList.data);

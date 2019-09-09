@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../config/http_service.dart';
-import '../components/home/header_widget.dart';
-import '../components/home/swiper_banner_image.dart';
+import '../../config/http_service.dart';
+import '../../components/home/header_widget.dart';
+import '../../components/home/swiper_banner_image.dart';
 
 class HomePage extends StatefulWidget {
   final String title;

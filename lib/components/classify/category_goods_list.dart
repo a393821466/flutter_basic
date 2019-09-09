@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
+import '../../routers/app_route_init.dart';
 import '../../config/http_service.dart';
 import '../../models/categoryModel.dart';
 import '../../store/classify_store.dart';
@@ -68,6 +68,8 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                       if (pages <= totals) {
                         await _getAddCategory();
                       }
+                      print(pages);
+                      print(totals);
                       Provider.of<ClassifyStore>(context)
                           .changeNoMore('暂无内容..');
                       _controller.finishLoad(noMore: pages == totals);
@@ -138,7 +140,10 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 
   Widget _listItem(List categoryDataList, int index) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        AppRouteInit.router.navigateTo(
+            context, '/goodsDetail?id=${categoryDataList[index].goodsId}');
+      },
       child: Container(
         padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
         decoration: BoxDecoration(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../config/http_service.dart';
-import '../models/classifyModel.dart';
-import '../store/classify_store.dart';
-import '../components/classify/left_navigator.dart';
-import '../components/classify/sub_navigator.dart';
-import '../components/classify/category_goods_list.dart';
+import '../../config/http_service.dart';
+import '../../models/classifyModel.dart';
+import '../../store/classify_store.dart';
+import '../../components/classify/left_navigator.dart';
+import '../../components/classify/sub_navigator.dart';
+import '../../components/classify/category_goods_list.dart';
 
 class ClassifsPage extends StatefulWidget {
   final String title;

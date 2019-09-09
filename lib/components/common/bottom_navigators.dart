@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import '../../pages/home_page.dart';
-import '../../pages/classifs_page.dart';
-import '../../pages/shopcar_page.dart';
-import '../../pages/my_page.dart';
+import '../../views/manPages/home_page.dart';
+import '../../views/goodsPage/classifs_page.dart';
+import '../../views/shopCarPage/shopcar_page.dart';
+import '../../views/myPage/my_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-int ICON_FONTSIZE=48;
+int ICON_FONTSIZE = 48;
+
 // 自定义数据
 class NavigatorPost {
   final String title;
   final IconData icon;
   final int size;
-  NavigatorPost({this.title, this.icon,this.size});
+  NavigatorPost({this.title, this.icon, this.size});
 }
 
 List<NavigatorPost> _post = [
-  NavigatorPost(title: '首页', icon: Icons.home,size:ICON_FONTSIZE),
-  NavigatorPost(title: '分类', icon: Icons.list,size:ICON_FONTSIZE),
-  NavigatorPost(title: '购物车', icon: Icons.shopping_cart,size:ICON_FONTSIZE),
-  NavigatorPost(title: '我的', icon: Icons.account_circle,size:ICON_FONTSIZE)
+  NavigatorPost(title: '首页', icon: Icons.home, size: ICON_FONTSIZE),
+  NavigatorPost(title: '分类', icon: Icons.list, size: ICON_FONTSIZE),
+  NavigatorPost(title: '购物车', icon: Icons.shopping_cart, size: ICON_FONTSIZE),
+  NavigatorPost(title: '我的', icon: Icons.account_circle, size: ICON_FONTSIZE)
 ];
 
 // 公共导航
@@ -33,7 +34,7 @@ class _BottomNavigatorsState extends State<BottomNavigators> {
   List<Widget> pages = <Widget>[
     HomePage('首页'),
     ClassifsPage('分类'),
-    ShopCarPage('购物车'),
+    ShopCarPage(),
     MyPage('我的')
   ];
 
@@ -41,8 +42,11 @@ class _BottomNavigatorsState extends State<BottomNavigators> {
   List<BottomNavigationBarItem> _listPageView() {
     var das = _post.map((item) {
       return BottomNavigationBarItem(
-          icon: Icon(item.icon,size:ScreenUtil().setSp(item.size),),
-          activeIcon: Icon(item.icon,size:ScreenUtil().setSp(item.size)),
+          icon: Icon(
+            item.icon,
+            size: ScreenUtil().setSp(item.size),
+          ),
+          activeIcon: Icon(item.icon, size: ScreenUtil().setSp(item.size)),
           title: Text(item.title));
     }).toList();
     return das;

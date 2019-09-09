@@ -34,11 +34,10 @@ class TopSearch extends StatefulWidget {
 }
 
 class _TopSearchState extends State<TopSearch> {
-  
-  _wrap(Widget child,void Function() callback){
+  _wrap(Widget child, void Function() callback) {
     return GestureDetector(
-      onTap: (){
-        if(callback!=null) callback();
+      onTap: () {
+        if (callback != null) callback();
       },
       child: child,
     );
@@ -47,7 +46,7 @@ class _TopSearchState extends State<TopSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(60),
+      height: ScreenUtil().setHeight(70),
       padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(50)),
@@ -57,21 +56,23 @@ class _TopSearchState extends State<TopSearch> {
             height: ScreenUtil().setHeight(58),
             alignment: Alignment.center,
             child: Icon(Icons.search,
-                size: ScreenUtil().setSp(48), color: Colors.grey[400]),
+                size: ScreenUtil().setSp(45), color: Colors.grey[400]),
           ),
           Expanded(
-            flex: 1,
-            child: _wrap(
-             Container(
-               padding:EdgeInsets.only(left:10),
-               child: Text('搜你喜欢的',style:TextStyle(color:Colors.black26,fontSize: ScreenUtil().setSp(32))),
-             ) , (){
-               print(1111);
-             })
-          ),
+              flex: 1,
+              child: _wrap(
+                  Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text('搜你喜欢的',
+                        style: TextStyle(
+                            color: Colors.black26,
+                            fontSize: ScreenUtil().setSp(26))),
+                  ), () {
+                print(1111);
+              })),
           IconButton(
             icon: Icon(Icons.mic),
-            alignment: Alignment.center,
+            alignment: Alignment.topCenter,
             iconSize: ScreenUtil().setSp(44),
             color: Colors.grey[400],
             onPressed: () {},

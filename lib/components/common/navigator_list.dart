@@ -1,14 +1,13 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'navigatorShopCar/route_animate_lib.dart';
 import '../../store/shop_car_store.dart';
-import '../../pages/home_page.dart';
-import '../../pages/classifs_page.dart';
-import '../../pages/shopcar_page.dart';
-import '../../pages/information_page.dart';
-import '../../pages/my_page.dart';
-import './navigatorShopCar/navigator_car_widget.dart';
+import '../../views/manPages/home_page.dart';
+import '../../views/goodsPage/classifs_page.dart';
+import '../../views/shopCarPage/shopcar_page.dart';
+import '../../views/informationPage/information_page.dart';
+import '../../views/myPage/my_page.dart';
 
 int ICON_FONTSIZE = 48;
 
@@ -102,7 +101,18 @@ class _NavigatorListPageState extends State<NavigatorListPage>
 
   // 购物车导航点击事件
   _shopCarClick() {
-    Provider.of<ShopCarStore>(context).changeShopCarStatus(false);
+    Navigator.of(context).push(TransparentRoute(
+      builder: (context) => RippleBackdropAnimatePage(
+        child: ShopCarPage(),
+        childFade: true,
+        duration: 300,
+        blurRadius: 0.0,
+        bottomButton: Icon(Icons.close),
+        bottomHeight: ScreenUtil().setHeight(120),
+        bottomButtonRotate: false,
+      ),
+    ));
+    Provider.of<ShopCarStore>(context).changeShopCarStatus(true);
   }
 
   @override
@@ -136,7 +146,7 @@ class _NavigatorListPageState extends State<NavigatorListPage>
         _shopCarClick();
       },
       child: Container(
-        padding: EdgeInsets.all(ScreenUtil().setSp(12)),
+        padding: EdgeInsets.all(ScreenUtil().setSp(10)),
         margin: EdgeInsets.only(top: 5),
         width: ScreenUtil().setSp(120),
         height: ScreenUtil().setSp(120),
