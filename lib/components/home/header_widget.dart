@@ -46,17 +46,14 @@ class _TopSearchState extends State<TopSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(70),
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      height: ScreenUtil().setHeight(66),
+      padding: EdgeInsets.fromLTRB(ScreenUtil().setSp(20), ScreenUtil().setSp(5), ScreenUtil().setSp(5), 0),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(50)),
       child: Row(
         children: <Widget>[
           Container(
-            height: ScreenUtil().setHeight(58),
-            alignment: Alignment.center,
-            child: Icon(Icons.search,
-                size: ScreenUtil().setSp(45), color: Colors.grey[400]),
+            child: Icon(Icons.search, color: Colors.grey[400]),
           ),
           Expanded(
               flex: 1,
@@ -66,14 +63,12 @@ class _TopSearchState extends State<TopSearch> {
                     child: Text('搜你喜欢的',
                         style: TextStyle(
                             color: Colors.black26,
-                            fontSize: ScreenUtil().setSp(26))),
+                            fontSize: ScreenUtil().setSp(28))),
                   ), () {
-                print(1111);
               })),
           IconButton(
             icon: Icon(Icons.mic),
             alignment: Alignment.topCenter,
-            iconSize: ScreenUtil().setSp(44),
             color: Colors.grey[400],
             onPressed: () {},
           )

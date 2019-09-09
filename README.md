@@ -329,6 +329,10 @@ MaterialApp(
 );
 
 > 使用方式:
+编码:var json = jsonEncode(Utf8Encoder().convert('来自第一个界面'));
 AppRouteInit.router.navigatorTo(context,'路径地址如:/page?参数',)
-
+解码：
+var list=List<int>();
+jsonDecode(encodeCn).forEach(list.add);
+String value = Utf8Decoder().convert(list);
 ```

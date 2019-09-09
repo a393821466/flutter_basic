@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
+import '../../utils/fluro_convert_util.dart';
 import '../../routers/app_route_init.dart';
 import '../../config/http_service.dart';
 import '../../models/categoryModel.dart';
@@ -68,8 +69,6 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                       if (pages <= totals) {
                         await _getAddCategory();
                       }
-                      print(pages);
-                      print(totals);
                       Provider.of<ClassifyStore>(context)
                           .changeNoMore('暂无内容..');
                       _controller.finishLoad(noMore: pages == totals);
@@ -141,8 +140,12 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget _listItem(List categoryDataList, int index) {
     return InkWell(
       onTap: () {
+        var str=categoryDataList[index];
+        String goodsId=str.goodsId;
+        String images=FluroConvertUtils.fluroCnParamsEncode(str.images);
+        String description=FluroConvertUtils.fluroCnParamsEncode(str.description);
         AppRouteInit.router.navigateTo(
-            context, '/goodsDetail?id=${categoryDataList[index].goodsId}');
+            context, '/goodsDetail'+'?goodsId=$goodsId&images=$images&description=$description');
       },
       child: Container(
         padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
@@ -152,11 +155,11 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
               bottom: BorderSide(width: 1.0, color: Colors.black12),
             )),
         child: Row(
-          children: <Widget>[
-            _goodsImage(categoryDataList, index),
-            _goodsName(categoryDataList, index),
-          ],
-        ),
+            children: <Widget>[
+              _goodsImage(categoryDataList, index),
+              _goodsName(categoryDataList, index),
+            ],
+          ),
       ),
     );
   }
