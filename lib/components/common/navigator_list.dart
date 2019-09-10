@@ -118,24 +118,20 @@ class _NavigatorListPageState extends State<NavigatorListPage>
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    return Stack(
-      children: <Widget>[
-        Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: _listPageView(),
-            currentIndex: currentIndex,
-            onTap: _handleTapNavigator,
-          ),
-          floatingActionButton: _floatingActionButtonCenter(),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          body: IndexedStack(
-            index: currentIndex,
-            children: pages,
-          ),
-        )
-      ],
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: _listPageView(),
+        currentIndex: currentIndex,
+        onTap: _handleTapNavigator,
+      ),
+      floatingActionButton: _floatingActionButtonCenter(),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.centerDocked,
+      body: IndexedStack(
+        index: currentIndex,
+        children: pages,
+      ),
     );
   }
 

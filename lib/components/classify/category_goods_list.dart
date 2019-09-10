@@ -10,6 +10,7 @@ import '../../store/classify_store.dart';
 
 // 商品分类的商品列表
 class CategoryGoodsList extends StatefulWidget {
+  static String tag='category_goods';
   @override
   _CategoryGoodsListState createState() => _CategoryGoodsListState();
 }
@@ -102,7 +103,10 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
     return Container(
       width: ScreenUtil().setWidth(240.0),
       padding: EdgeInsets.all(8),
-      child: Image.network(categoryDataList[index].images, fit: BoxFit.fill),
+      child:Hero(
+        tag: 'hero${categoryDataList[index].goodsId}',
+        child: Image.network(categoryDataList[index].images,fit: BoxFit.fill),
+      )
     );
   }
 
@@ -154,7 +158,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
             border: Border(
               bottom: BorderSide(width: 1.0, color: Colors.black12),
             )),
-        child: Row(
+          child: Row(
             children: <Widget>[
               _goodsImage(categoryDataList, index),
               _goodsName(categoryDataList, index),

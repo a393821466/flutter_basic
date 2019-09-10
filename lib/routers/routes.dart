@@ -16,6 +16,6 @@ class Routes {
       },
     );
     // 配置路由
-    router.define(detailsPage, handler: detailsHandler,transitionType:TransitionType.material);
+    router.define(detailsPage, handler: detailsHandler,transitionType:TransitionType.fadeIn);
   }
 }
