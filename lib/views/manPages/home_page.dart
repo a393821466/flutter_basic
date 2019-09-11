@@ -23,13 +23,31 @@ class _HomePageState extends State<HomePage>
     super.initState();
   }
 
+  // 登录按钮
+  final login = InkWell(
+    onTap: () {
+      print('功能尚未完善');
+    },
+    child: Container(
+      margin: EdgeInsets.only(
+          right: ScreenUtil().setSp(25), left: ScreenUtil().setSp(25)),
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 8),
+          Icon(Icons.input, size: ScreenUtil().setSp(48)),
+          Text('登陆', style: TextStyle(fontSize: ScreenUtil().setSp(24)))
+        ],
+      ),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: TopSearch(),
           leading: SqrCcan(),
-          actions: rightIconButton(),
+          actions: <Widget>[login],
         ),
         body: Container(
           color: Colors.grey[200],

@@ -43,75 +43,60 @@ class _TopSearchState extends State<TopSearch> {
     );
   }
 
+  //搜索图标
+  final searchIcon = Container(
+    width: ScreenUtil().setWidth(40),
+    height: ScreenUtil().setHeight(40),
+    child: Icon(Icons.search, color: Colors.grey[400]),
+  );
+
+  // 搜索栏
+  Widget _seatchContainer() {
+    return Expanded(
+      flex: 1,
+      child: _wrap(
+          Container(
+            padding: EdgeInsets.only(left: 10),
+            child: Text('搜你喜欢的',
+                style: TextStyle(
+                    color: Colors.black26, fontSize: ScreenUtil().setSp(28))),
+          ), () {
+        print('点击跳转');
+      }),
+    );
+  }
+
+  // 点击录音
+  final micIcon = Container(
+    width: ScreenUtil().setWidth(40),
+    height: ScreenUtil().setHeight(40),
+    child: IconButton(
+      icon: Icon(Icons.mic),
+      iconSize: ScreenUtil().setSp(40),
+      padding: EdgeInsets.all(0),
+      alignment: Alignment.center,
+      color: Colors.grey[400],
+      onPressed: () {
+        print('还未完成');
+      },
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: ScreenUtil().setHeight(66),
-      padding: EdgeInsets.fromLTRB(ScreenUtil().setSp(20), ScreenUtil().setSp(5), ScreenUtil().setSp(5), 0),
+      padding: EdgeInsets.fromLTRB(ScreenUtil().setSp(20),
+          ScreenUtil().setSp(5), ScreenUtil().setSp(25), 0),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(50)),
       child: Row(
         children: <Widget>[
-          Container(
-            child: Icon(Icons.search, color: Colors.grey[400]),
-          ),
-          Expanded(
-              flex: 1,
-              child: _wrap(
-                  Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text('搜你喜欢的',
-                        style: TextStyle(
-                            color: Colors.black26,
-                            fontSize: ScreenUtil().setSp(28))),
-                  ), () {
-              })),
-          IconButton(
-            icon: Icon(Icons.mic),
-            alignment: Alignment.topCenter,
-            color: Colors.grey[400],
-            onPressed: () {},
-          )
+          searchIcon,
+          _seatchContainer(),
+          micIcon,
         ],
       ),
     );
   }
-}
-
-// 右边按钮（地区，会员码）
-List<Widget> rightIconButton() {
-  List<Widget> _list = <Widget>[
-    // InkWell(
-    //     onTap: () {
-    //       print('功能尚未完善');
-    //     },
-    //     child: Container(
-    //       margin: EdgeInsets.only(
-    //           right: ScreenUtil().setSp(20), left: ScreenUtil().setSp(20)),
-    //       child: Column(
-    //         children: <Widget>[
-    //           SizedBox(height: 8),
-    //           Icon(Icons.map, size: ScreenUtil().setSp(48)),
-    //           Text('地区', style: TextStyle(fontSize: ScreenUtil().setSp(24)))
-    //         ],
-    //       ),
-    //     )),
-    InkWell(
-      onTap: () {
-        print('功能尚未完善');
-      },
-      child: Container(
-        margin: EdgeInsets.only(
-            right: ScreenUtil().setSp(25), left: ScreenUtil().setSp(25)),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 8),
-            Icon(Icons.input, size: ScreenUtil().setSp(48)),
-            Text('登陆', style: TextStyle(fontSize: ScreenUtil().setSp(24)))
-          ],
-        ),
-      ),
-    ),
-  ];
-  return _list;
 }
