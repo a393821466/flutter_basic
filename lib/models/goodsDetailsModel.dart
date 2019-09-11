@@ -1,10 +1,10 @@
-class ShopDetailModel {
+class GoodsDetailsModel {
   bool success;
   List<ShopDetailsData> data;
 
-  ShopDetailModel({this.success, this.data});
+  GoodsDetailsModel({this.success, this.data});
 
-  ShopDetailModel.fromJson(Map<String, dynamic> json) {
+  GoodsDetailsModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
       data = new List<ShopDetailsData>();

@@ -7,6 +7,7 @@ import '../../routers/app_route_init.dart';
 import '../../config/http_service.dart';
 import '../../models/categoryModel.dart';
 import '../../store/classify_store.dart';
+import '../../store/goods_details_store.dart';
 
 // 商品分类的商品列表
 class CategoryGoodsList extends StatefulWidget {
@@ -148,6 +149,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
         String goodsId=str.goodsId;
         String images=FluroConvertUtils.fluroCnParamsEncode(str.images);
         String description=FluroConvertUtils.fluroCnParamsEncode(str.description);
+        Provider.of<GoodsDetailsStore>(context).restartBool(true);
         AppRouteInit.router.navigateTo(
             context, '/goodsDetail'+'?goodsId=$goodsId&images=$images&description=$description');
       },
