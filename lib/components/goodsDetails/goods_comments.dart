@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'goods_sub_comone.dart';
+import 'goods_sub_comtwo.dart';
 
 // 评论与详情
 class GoodsComments extends StatefulWidget {
@@ -16,7 +17,15 @@ class _GoodsCommentsState extends State<GoodsComments> {
       children: <Widget>[
         Container(
           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-          color: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(
+                width: ScreenUtil().setSp(2),
+                color: Colors.grey[200]
+              ),
+            ),
+          ),
           child: Row(
             children: <Widget>[
               InkWell(
@@ -27,7 +36,7 @@ class _GoodsCommentsState extends State<GoodsComments> {
                 },
                 child: Container(
                   alignment: Alignment.center,
-                  height: ScreenUtil().setHeight(100.0),
+                  height: ScreenUtil().setHeight(80.0),
                   width: ScreenUtil().setWidth(335.0),
                   decoration: BoxDecoration(
                     border: Border(
@@ -58,7 +67,7 @@ class _GoodsCommentsState extends State<GoodsComments> {
                 },
                 child: Container(
                   alignment: Alignment.center,
-                  height: ScreenUtil().setHeight(100.0),
+                  height: ScreenUtil().setHeight(80.0),
                   width: ScreenUtil().setWidth(335.0),
                   decoration: BoxDecoration(
                     border: Border(
@@ -86,8 +95,9 @@ class _GoodsCommentsState extends State<GoodsComments> {
         ),
         Container(
           color: Colors.white,
+          alignment: Alignment.centerLeft,
           child: Row(
-            children: <Widget>[tabFlat ? GoodsSubComOne() : Text('sadasdasd')],
+            children: <Widget>[tabFlat ? GoodsSubComOne() : GoodsSubComTwo()],
           ),
         )
       ],

@@ -139,21 +139,21 @@ class GoodInfoModel {
 }
 
 class GoodComments {
-  int sCORE;
+  int score;
   String comments;
   String userName;
   String avatar;
   int discussTime;
 
   GoodComments(
-      {this.sCORE,
+      {this.score,
       this.comments,
       this.userName,
       this.avatar,
       this.discussTime});
 
   GoodComments.fromJson(Map<String, dynamic> json) {
-    sCORE = json['SCORE'];
+    score = json['score'];
     comments = json['comments'];
     userName = json['userName'];
     avatar = json['avatar'];
@@ -162,7 +162,7 @@ class GoodComments {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['SCORE'] = this.sCORE;
+    data['score'] = this.score;
     data['comments'] = this.comments;
     data['userName'] = this.userName;
     data['avatar'] = this.avatar;

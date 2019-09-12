@@ -9,11 +9,11 @@ Handler detailsHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
     // 取值
     String goodsId = params["goodsId"]?.first;
-    String images = params["images"]?.first;
+    // String images = params["images"]?.first;
     // 返回widget
     return DetailsPage(
       goodsId: goodsId,
-      images: FluroConvertUtils.fluroCnParamsDecode(images),
+      // images: FluroConvertUtils.fluroCnParamsDecode(images),
     );
   },
 );

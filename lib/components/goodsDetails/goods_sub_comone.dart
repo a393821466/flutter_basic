@@ -12,9 +12,7 @@ class GoodsSubComOne extends StatelessWidget {
         child: Column(
       children: <Widget>[
         Html(
-          data: gd == null || Provider.of<GoodsDetailsStore>(context).boolflat
-              ? '<div style="width:100px;height:40px;background:#ccc"></div>'
-              : gd.goodsDetail,
+          data: gd.goodsDetail
         ),
         SizedBox(height: ScreenUtil().setHeight(100.0)),
       ],

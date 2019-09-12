@@ -102,13 +102,14 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   // 图片
   Widget _goodsImage(List categoryDataList, int index) {
     return Container(
-        width: ScreenUtil().setWidth(240.0),
-        padding: EdgeInsets.all(8),
-        child: Hero(
-          tag: 'hero${categoryDataList[index].goodsId}',
-          child:
-              Image.network(categoryDataList[index].images, fit: BoxFit.fill),
-        ));
+      width: ScreenUtil().setWidth(240.0),
+      padding: EdgeInsets.all(8),
+      child: Image.network(categoryDataList[index].images, fit: BoxFit.fill),
+      // Hero(
+      //   tag: 'hero${categoryDataList[index].goodsId}',
+      //   child: Image.network(categoryDataList[index].images, fit: BoxFit.fill),
+      // ),
+    );
   }
 
   Widget _goodsName(List categoryDataList, int index) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/http_service.dart';
 import '../../models/goodsDetailsModel.dart';
 import '../../store/goods_details_store.dart';
+import '../../components/goodsDetails/goods_skeleton.dart';
 import '../../components/goodsDetails/goods_detail_img.dart';
 import '../../components/goodsDetails/goods_price.dart';
 import '../../components/goodsDetails/goods_description.dart';
@@ -14,8 +14,7 @@ import '../../components/goodsDetails/goods_buy_car.dart';
 class DetailsPage extends StatefulWidget {
   static String tag = 'details_page';
   final String goodsId;
-  final String images;
-  DetailsPage({this.goodsId, this.images});
+  DetailsPage({this.goodsId});
   @override
   _DetailsPageState createState() => _DetailsPageState();
 }
@@ -43,7 +42,7 @@ class _DetailsPageState extends State<DetailsPage> {
     bool flat = Provider.of<GoodsDetailsStore>(context).boolflat;
     return Scaffold(
       appBar: AppBar(title: Text('商品详情')),
-      body: Container(
+      body: getDetails==null||flat?GoodsSkeleton():Container(
         color: Colors.grey[200],
         child: Stack(
           children: <Widget>[
@@ -52,7 +51,6 @@ class _DetailsPageState extends State<DetailsPage> {
               context: context,
               child: NotificationListener(
                 onNotification: (ScrollNotification) {
-                  print(ScrollNotification);
                   if (ScrollNotification is ScrollUpdateNotification &&
                       ScrollNotification.depth == 0) {
                     _onScroll(ScrollNotification.metrics.pixels);
@@ -62,7 +60,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   controller: scrollContorller,
                   children: <Widget>[
                     GoodsDetailImg(
-                        widget.goodsId, widget.images, getDetails, flat),
+                        widget.goodsId,getDetails),
                     GoodsPrice(getDetails, flat),
                     GoodsDescrition(flat),
                     GoodsComments()
@@ -73,7 +71,7 @@ class _DetailsPageState extends State<DetailsPage> {
             GoodsBuyCar(),
             Positioned(
               right: ScreenUtil().setSp(20),
-              bottom: ScreenUtil().setSp(130),
+              bottom: ScreenUtil().setSp(200),
               child: AnimatedOpacity(
                   opacity: _alphaAppBar >= 1 ? 1 : 0,
                   duration: Duration(milliseconds: 300),
@@ -84,12 +82,12 @@ class _DetailsPageState extends State<DetailsPage> {
                         scrollContorller.jumpTo(0.0);
                       },
                       child: Container(
-                        width: ScreenUtil().setWidth(80.0),
-                        height: ScreenUtil().setHeight(80.0),
+                        width: 50.0,
+                        height: 50.0,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(80.0),
-                            color: Color.fromRGBO(0, 0, 0, 0.6)),
+                            borderRadius: BorderRadius.circular(200.0),
+                            color: Color.fromRGBO(0, 0, 0, 0.5)),
                         child: Icon(Icons.keyboard_arrow_up,
                             size: 32, color: Colors.grey[200]),
                       ),
