@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'http_url.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HttpUtils {
   static HttpUtils instance;
@@ -51,6 +54,7 @@ class HttpUtils {
         throw Exception('后端接口出现异常');
       }
     } catch (e) {
+      print('post error---------$e');
       formartError(e);
     }
   }
@@ -102,17 +106,38 @@ class HttpUtils {
   void formartError(DioError error) {
     if (error.type == DioErrorType.CONNECT_TIMEOUT) {
       print("连接超时");
+      showToastDialog("连接超时");
     } else if (error.type == DioErrorType.SEND_TIMEOUT) {
       print("请求超时");
+      showToastDialog("请求超时");
     } else if (error.type == DioErrorType.RECEIVE_TIMEOUT) {
       print("响应超时");
+      showToastDialog("响应超时");
     } else if (error.type == DioErrorType.RESPONSE) {
       print("出现异常");
+      showToastDialog("出现异常");
     } else if (error.type == DioErrorType.CANCEL) {
       print("请求取消");
+      showToastDialog("请求取消");
     } else {
       print("未知错误");
+      showToastDialog("未知错误");
     }
+  }
+
+  /**
+   * 弹窗
+   */
+  Widget showToastDialog(String txt) {
+    Fluttertoast.showToast(
+      msg: txt,
+      backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIos: 2,
+      fontSize: ScreenUtil().setSp(24),
+    );
   }
 
   /*

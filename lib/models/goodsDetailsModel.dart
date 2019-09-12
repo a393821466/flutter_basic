@@ -142,14 +142,21 @@ class GoodComments {
   int sCORE;
   String comments;
   String userName;
+  String avatar;
   int discussTime;
 
-  GoodComments({this.sCORE, this.comments, this.userName, this.discussTime});
+  GoodComments(
+      {this.sCORE,
+      this.comments,
+      this.userName,
+      this.avatar,
+      this.discussTime});
 
   GoodComments.fromJson(Map<String, dynamic> json) {
     sCORE = json['SCORE'];
     comments = json['comments'];
     userName = json['userName'];
+    avatar = json['avatar'];
     discussTime = json['discussTime'];
   }
 
@@ -158,6 +165,7 @@ class GoodComments {
     data['SCORE'] = this.sCORE;
     data['comments'] = this.comments;
     data['userName'] = this.userName;
+    data['avatar'] = this.avatar;
     data['discussTime'] = this.discussTime;
     return data;
   }

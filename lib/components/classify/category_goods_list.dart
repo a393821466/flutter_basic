@@ -11,7 +11,7 @@ import '../../store/goods_details_store.dart';
 
 // 商品分类的商品列表
 class CategoryGoodsList extends StatefulWidget {
-  static String tag='category_goods';
+  static String tag = 'category_goods';
   @override
   _CategoryGoodsListState createState() => _CategoryGoodsListState();
 }
@@ -24,7 +24,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   bool _enableLoad = true;
   // 开启无限加载
   bool _enableInfiniteLoad = false;
-  //
+  // 滚动控制器
   var scrollContorller = new ScrollController();
   @override
   void initState() {
@@ -102,13 +102,13 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   // 图片
   Widget _goodsImage(List categoryDataList, int index) {
     return Container(
-      width: ScreenUtil().setWidth(240.0),
-      padding: EdgeInsets.all(8),
-      child:Hero(
-        tag: 'hero${categoryDataList[index].goodsId}',
-        child: Image.network(categoryDataList[index].images,fit: BoxFit.fill),
-      )
-    );
+        width: ScreenUtil().setWidth(240.0),
+        padding: EdgeInsets.all(8),
+        child: Hero(
+          tag: 'hero${categoryDataList[index].goodsId}',
+          child:
+              Image.network(categoryDataList[index].images, fit: BoxFit.fill),
+        ));
   }
 
   Widget _goodsName(List categoryDataList, int index) {
@@ -145,13 +145,16 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget _listItem(List categoryDataList, int index) {
     return InkWell(
       onTap: () {
-        var str=categoryDataList[index];
-        String goodsId=str.goodsId;
-        String images=FluroConvertUtils.fluroCnParamsEncode(str.images);
-        String description=FluroConvertUtils.fluroCnParamsEncode(str.description);
+        var str = categoryDataList[index];
+        String goodsId = str.goodsId;
+        String images = FluroConvertUtils.fluroCnParamsEncode(str.images);
+        String description =
+            FluroConvertUtils.fluroCnParamsEncode(str.description);
         Provider.of<GoodsDetailsStore>(context).restartBool(true);
         AppRouteInit.router.navigateTo(
-            context, '/goodsDetail'+'?goodsId=$goodsId&images=$images&description=$description');
+            context,
+            '/goodsDetail' +
+                '?goodsId=$goodsId&images=$images&description=$description');
       },
       child: Container(
         padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
@@ -160,12 +163,12 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
             border: Border(
               bottom: BorderSide(width: 1.0, color: Colors.black12),
             )),
-          child: Row(
-            children: <Widget>[
-              _goodsImage(categoryDataList, index),
-              _goodsName(categoryDataList, index),
-            ],
-          ),
+        child: Row(
+          children: <Widget>[
+            _goodsImage(categoryDataList, index),
+            _goodsName(categoryDataList, index),
+          ],
+        ),
       ),
     );
   }
