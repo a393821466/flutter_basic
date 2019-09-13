@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import '../../store/shop_car_store.dart';
 
 class GoodsBuyCar extends StatefulWidget {
+  final getDetails;
+  GoodsBuyCar(this.getDetails);
   @override
   _GoodsBuyCarState createState() => _GoodsBuyCarState();
 }
 
 class _GoodsBuyCarState extends State<GoodsBuyCar> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var goodsId = widget.getDetails.goodsId;
+    var goodsName = widget.getDetails.goodsName;
+    int count = 1;
+    var price = widget.getDetails.presentPrice;
+    var images = widget.getDetails.image1;
     return Positioned(
       bottom: 0,
       left: 0,
@@ -32,7 +46,10 @@ class _GoodsBuyCarState extends State<GoodsBuyCar> {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                await Provider.of<ShopCarStore>(context)
+                    .saveCarData(goodsId, goodsName, count, price, images);
+              },
               child: Container(
                 alignment: Alignment.center,
                 width: ScreenUtil().setWidth(320),
@@ -44,7 +61,9 @@ class _GoodsBuyCarState extends State<GoodsBuyCar> {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                await Provider.of<ShopCarStore>(context).remove();
+              },
               child: Container(
                 alignment: Alignment.center,
                 width: ScreenUtil().setWidth(320),

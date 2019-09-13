@@ -21,9 +21,7 @@ class _GoodsCommentsState extends State<GoodsComments> {
             color: Colors.white,
             border: Border(
               bottom: BorderSide(
-                width: ScreenUtil().setSp(2),
-                color: Colors.grey[200]
-              ),
+                  width: ScreenUtil().setSp(2), color: Colors.grey[200]),
             ),
           ),
           child: Row(

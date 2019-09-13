@@ -42,61 +42,62 @@ class _DetailsPageState extends State<DetailsPage> {
     bool flat = Provider.of<GoodsDetailsStore>(context).boolflat;
     return Scaffold(
       appBar: AppBar(title: Text('商品详情')),
-      body: getDetails==null||flat?GoodsSkeleton():Container(
-        color: Colors.grey[200],
-        child: Stack(
-          children: <Widget>[
-            MediaQuery.removePadding(
-              removeTop: true,
-              context: context,
-              child: NotificationListener(
-                onNotification: (ScrollNotification) {
-                  if (ScrollNotification is ScrollUpdateNotification &&
-                      ScrollNotification.depth == 0) {
-                    _onScroll(ScrollNotification.metrics.pixels);
-                  }
-                },
-                child: ListView(
-                  controller: scrollContorller,
-                  children: <Widget>[
-                    GoodsDetailImg(
-                        widget.goodsId,getDetails),
-                    GoodsPrice(getDetails, flat),
-                    GoodsDescrition(flat),
-                    GoodsComments()
-                  ],
-                ),
-              ),
-            ),
-            GoodsBuyCar(),
-            Positioned(
-              right: ScreenUtil().setSp(20),
-              bottom: ScreenUtil().setSp(200),
-              child: AnimatedOpacity(
-                  opacity: _alphaAppBar >= 1 ? 1 : 0,
-                  duration: Duration(milliseconds: 300),
-                  child: Offstage(
-                    offstage: _alphaAppBar >= 0.5 ? false : true,
-                    child: InkWell(
-                      onTap: () {
-                        scrollContorller.jumpTo(0.0);
+      body: getDetails == null || flat
+          ? GoodsSkeleton()
+          : Container(
+              color: Colors.grey[200],
+              child: Stack(
+                children: <Widget>[
+                  MediaQuery.removePadding(
+                    removeTop: true,
+                    context: context,
+                    child: NotificationListener(
+                      onNotification: (ScrollNotification) {
+                        if (ScrollNotification is ScrollUpdateNotification &&
+                            ScrollNotification.depth == 0) {
+                          _onScroll(ScrollNotification.metrics.pixels);
+                        }
                       },
-                      child: Container(
-                        width: 50.0,
-                        height: 50.0,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(200.0),
-                            color: Color.fromRGBO(0, 0, 0, 0.5)),
-                        child: Icon(Icons.keyboard_arrow_up,
-                            size: 32, color: Colors.grey[200]),
+                      child: ListView(
+                        controller: scrollContorller,
+                        children: <Widget>[
+                          GoodsDetailImg(widget.goodsId, getDetails),
+                          GoodsPrice(getDetails, flat),
+                          GoodsDescrition(flat),
+                          GoodsComments()
+                        ],
                       ),
                     ),
-                  )),
-            )
-          ],
-        ),
-      ),
+                  ),
+                  GoodsBuyCar(getDetails),
+                  Positioned(
+                    right: ScreenUtil().setSp(20),
+                    bottom: ScreenUtil().setSp(200),
+                    child: AnimatedOpacity(
+                        opacity: _alphaAppBar >= 1 ? 1 : 0,
+                        duration: Duration(milliseconds: 300),
+                        child: Offstage(
+                          offstage: _alphaAppBar >= 0.5 ? false : true,
+                          child: InkWell(
+                            onTap: () {
+                              scrollContorller.jumpTo(0.0);
+                            },
+                            child: Container(
+                              width: 50.0,
+                              height: 50.0,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(200.0),
+                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
+                              child: Icon(Icons.keyboard_arrow_up,
+                                  size: 32, color: Colors.grey[200]),
+                            ),
+                          ),
+                        )),
+                  )
+                ],
+              ),
+            ),
     );
   }
 

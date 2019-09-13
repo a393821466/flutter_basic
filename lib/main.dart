@@ -14,7 +14,8 @@ main() {
     providers: [
       ChangeNotifierProvider<ClassifyStore>.value(value: ClassifyStore()),
       ChangeNotifierProvider<ShopCarStore>.value(value: ShopCarStore()),
-      ChangeNotifierProvider<GoodsDetailsStore>.value(value:GoodsDetailsStore())
+      ChangeNotifierProvider<GoodsDetailsStore>.value(
+          value: GoodsDetailsStore()),
     ],
     child: MyApp(),
   ));

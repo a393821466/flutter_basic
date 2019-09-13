@@ -340,7 +340,55 @@ String value = Utf8Decoder().convert(list);
 - 解析 html
 
 ```
-1.使用flutter_html
+1.引入flutter_html
 
+2.简单使用:
+Html(
+  data:'<div></div>'
+)
+```
+
+- 数据持久化
+
+```
+1.引入shared_preferences
+
+2.简单使用:
+List<String> testList=[];
+// 增加
+_add() async {
+  // 初始化
+  print('>>>>>>>>>>>>>>>>>>>>>我进了这里了');
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  // 申明一个字符串变量
+  String temp = '我爱你啊啊啊啊';
+  // 把temp添加到变量里
+  testList.add(temp);
+  print(testList);
+  // 增加到持久化
+  prefs.setStringList('testInfo', testList);
+  _show();
+}
+
+// 查询
+_show() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  if (prefs.getStringList('testInfo') != null) {
+    setState(() {
+      testList = prefs.getStringList('testInfo');
+    });
+  }
+}
+
+// 删除
+_del() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   // 删除所有 prefs.clear();
+  //   // 移除key值
+  prefs.remove('testInfo');
+  setState(() {
+    testList = [];
+  });
+}
 
 ```
