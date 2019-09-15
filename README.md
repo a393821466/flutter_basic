@@ -358,7 +358,6 @@ List<String> testList=[];
 // 增加
 _add() async {
   // 初始化
-  print('>>>>>>>>>>>>>>>>>>>>>我进了这里了');
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // 申明一个字符串变量
   String temp = '我爱你啊啊啊啊';

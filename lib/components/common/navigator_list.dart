@@ -69,7 +69,6 @@ class _NavigatorListPageState extends State<NavigatorListPage>
   List<Widget> pages = <Widget>[
     HomePage('首页'),
     ClassifsPage('分类'),
-    ShopCarPage(),
     InformationPage('资讯'),
     MyPage('我的')
   ];
@@ -103,7 +102,7 @@ class _NavigatorListPageState extends State<NavigatorListPage>
   _shopCarClick() {
     Navigator.of(context).push(TransparentRoute(
       builder: (context) => RippleBackdropAnimatePage(
-        child: ShopCarPage(),
+        child: Provider.of<ShopCarStore>(context).getShopCarStatus?ShopCarPage():Text(''),
         childFade: true,
         duration: 300,
         blurRadius: 0.0,
