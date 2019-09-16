@@ -32,11 +32,19 @@ class ShopCarStore with ChangeNotifier {
     var tempList = getCartString == null ? [] : json.decode(getCartString);
     bool isBools = false;
     int iv = 0;
+    allPrice=0;
+    allGoodsCount=0;
     tempList.forEach((item) {
       if (item['goodsId'] == goodsId) {
         tempList[iv]['count'] = item['count'] + 1;
         shoppingCarList[iv].count++;
         isBools = true;
+      }
+      if(item['isCheck']){
+        // allPrice+=(cartList[iv].price*cartList[iv].count);
+        allPrice = NumUtil.add(
+              allPrice, NumUtil.multiply(item['count'], item['price']));
+        allGoodsCount+=item['count'];
       }
       iv++;
     });
@@ -51,6 +59,9 @@ class ShopCarStore with ChangeNotifier {
       };
       tempList.add(newGoods);
       shoppingCarList.add(ShoppingCarModel.fromJson(newGoods));
+      allPrice=NumUtil.add(
+              allPrice, NumUtil.multiply(count, price));
+      allGoodsCount+=count;
     }
     getCartString = jsonEncode(tempList);
     prefs.setString('cartInfo', getCartString);
@@ -62,6 +73,8 @@ class ShopCarStore with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('cartInfo');
     shoppingCarList = [];
+    allPrice=0;
+    allGoodsCount=0;
     print('清空完成~~~~~~~~~~~~~~~~~~~~');
     notifyListeners();
   }

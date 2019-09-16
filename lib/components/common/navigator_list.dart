@@ -3,11 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'navigatorShopCar/route_animate_lib.dart';
 import '../../store/shop_car_store.dart';
+import '../../store/currentIndex.dart';
 import '../../views/manPages/home_page.dart';
 import '../../views/goodsPage/classifs_page.dart';
 import '../../views/shopCarPage/shopcar_page.dart';
 import '../../views/informationPage/information_page.dart';
 import '../../views/myPage/my_page.dart';
+
+
 
 int ICON_FONTSIZE = 48;
 
@@ -48,33 +51,20 @@ List<NavigatorPost> _post = [
       iColor: Colors.black54)
 ];
 
-class NavigatorListPage extends StatefulWidget {
-  @override
-  _NavigatorListPageState createState() => _NavigatorListPageState();
-}
 
-class _NavigatorListPageState extends State<NavigatorListPage>
-    with TickerProviderStateMixin {
-  int currentIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class NavigatorListPage extends StatelessWidget {
+  
+  // 页面
   List<Widget> pages = <Widget>[
     HomePage('首页'),
     ClassifsPage('分类'),
+    ShopCarPage(),
     InformationPage('资讯'),
     MyPage('我的')
   ];
 
   // 分类导航
-  List<BottomNavigationBarItem> _listPageView() {
+  List<BottomNavigationBarItem> _listPageView(context) {
     var das = _post.map((item) {
       return BottomNavigationBarItem(
           icon: Icon(item.icon,
@@ -86,20 +76,37 @@ class _NavigatorListPageState extends State<NavigatorListPage>
     }).toList();
     return das;
   }
-
-  // 导航点击事件
-  _handleTapNavigator(int index) {
-    if (index == 2) {
-      _shopCarClick();
-      return;
-    }
-    setState(() {
-      currentIndex = index;
-    });
+  @override
+  Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+    return Consumer<CurrentIndexStore>(
+      builder: (context,val,_){
+        int currentIndex=Provider.of<CurrentIndexStore>(context).getCurIdx;
+        return Scaffold(
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: _listPageView(context),
+            currentIndex: currentIndex,
+            onTap: (int index){
+              if (index == 2) {
+                _shopCarClick(context);
+                return;
+              }
+              Provider.of<CurrentIndexStore>(context).changeIndex(index);
+            },
+          ),
+          floatingActionButton: _floatingActionButtonCenter(context),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          body: IndexedStack(
+            index: currentIndex,
+            children: pages,
+          ),
+        );
+      },
+    );
   }
-
-  // 购物车导航点击事件
-  _shopCarClick() {
+    // 购物车导航点击事件
+  _shopCarClick(context) {
     Navigator.of(context).push(TransparentRoute(
       builder: (context) => RippleBackdropAnimatePage(
         child: Provider.of<ShopCarStore>(context).getShopCarStatus
@@ -116,31 +123,11 @@ class _NavigatorListPageState extends State<NavigatorListPage>
     ));
     Provider.of<ShopCarStore>(context).changeShopCarStatus(true);
   }
-
-  @override
-  Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: _listPageView(),
-        currentIndex: currentIndex,
-        onTap: _handleTapNavigator,
-      ),
-      floatingActionButton: _floatingActionButtonCenter(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: IndexedStack(
-        index: currentIndex,
-        children: pages,
-      ),
-    );
-  }
-
-  // 购物车导航按钮
-  Widget _floatingActionButtonCenter() {
+    // 购物车导航按钮
+  Widget _floatingActionButtonCenter(context) {
     return InkWell(
       onTap: () {
-        _shopCarClick();
+        _shopCarClick(context);
       },
       child: Container(
         padding: EdgeInsets.all(ScreenUtil().setSp(10)),

@@ -7,6 +7,7 @@ import './components/common/navigator_list.dart';
 import './store/classify_store.dart';
 import './store/shop_car_store.dart';
 import './store/goods_details_store.dart';
+import './store/currentIndex.dart';
 
 main() {
   Provider.debugCheckInvalidValueType = null;
@@ -16,6 +17,8 @@ main() {
       ChangeNotifierProvider<ShopCarStore>.value(value: ShopCarStore()),
       ChangeNotifierProvider<GoodsDetailsStore>.value(
           value: GoodsDetailsStore()),
+      ChangeNotifierProvider<CurrentIndexStore>.value(
+          value: CurrentIndexStore()),
     ],
     child: MyApp(),
   ));

@@ -37,46 +37,61 @@ class _GoodsBuyCarState extends State<GoodsBuyCar> {
         alignment: Alignment.centerLeft,
         child: Row(
           children: <Widget>[
-            InkWell(
-              onTap: () {
-                Navigator.of(context).push(TransparentRoute(
-                  builder: (context) => RippleBackdropAnimatePage(
-                    child: Provider.of<ShopCarStore>(context).getShopCarStatus
-                        ? ShopCarPage()
-                        : Text(''),
-                    childFade: true,
-                    duration: 300,
-                    blurRadius: 0.0,
-                    colors: Colors.grey[500],
-                    bottomButton: Icon(Icons.close),
-                    bottomHeight: ScreenUtil().setHeight(120),
-                    bottomButtonRotate: false,
+            Stack(
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(TransparentRoute(
+                      builder: (context) => RippleBackdropAnimatePage(
+                        child: Provider.of<ShopCarStore>(context).getShopCarStatus
+                            ? ShopCarPage()
+                            : Text(''),
+                        childFade: true,
+                        duration: 300,
+                        blurRadius: 0.0,
+                        colors: Colors.grey[500],
+                        bottomButton: Icon(Icons.close),
+                        bottomHeight: ScreenUtil().setHeight(120),
+                        bottomButtonRotate: false,
+                      ),
+                    ));
+                    Provider.of<ShopCarStore>(context).changeShopCarStatus(true);
+                  },
+                  child: Container(
+                    width: ScreenUtil().setWidth(110),
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.shopping_cart,
+                      size: 35,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                ));
-                Provider.of<ShopCarStore>(context).changeShopCarStatus(true);
-              },
-              child: Container(
-                width: ScreenUtil().setWidth(110),
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.shopping_cart,
-                  size: 35,
-                  color: Theme.of(context).primaryColor,
                 ),
-              ),
+                Consumer<ShopCarStore>(
+                  builder: (context,val,_){
+                    int goodsCount=Provider.of<ShopCarStore>(context).allGoodsNum;
+                    return goodsCount==0?Text(''):Positioned(
+                      right:8,
+                      top:5,
+                      child: Container(
+                        padding:EdgeInsets.fromLTRB(6, 3, 6, 3),
+                        decoration: BoxDecoration(
+                          color:Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(width:1,color:Colors.white),
+                        ),
+                        child: Text('${goodsCount}',style:TextStyle(fontSize: ScreenUtil().setSp(22),color:Colors.white)),
+                      ),
+                    );
+                  },
+                )
+              ],
             ),
             InkWell(
               onTap: () async {
                 if (flat) {
-                  flat = false;
                   await Provider.of<ShopCarStore>(context)
-                      .saveCarData(goodsId, goodsName, count, price, images)
-                      .then((res) {
-                    if (res == null) {
-                      DialogUtils().showToastDialog('已加入购物车');
-                      flat = true;
-                    }
-                  });
+                      .saveCarData(goodsId, goodsName, count, price, images);
                 }
               },
               child: Container(

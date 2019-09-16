@@ -60,26 +60,22 @@ class _ShopCarPageState extends State<ShopCarPage> {
                       ),
                     );
                   } else {
-                    return ListView(
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              margin:
-                                  EdgeInsets.only(top: ScreenUtil().setSp(160)),
-                              child: Icon(Icons.sentiment_dissatisfied,
-                                  color: Colors.grey[300], size: 64),
-                            ),
-                            Text(
-                              '购物车空空如也',
-                              style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(40),
-                                  color: Colors.grey[300]),
-                            )
-                          ],
-                        ),
-                      ],
+                    return Container(
+                      width:ScreenUtil().setWidth(750),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.sentiment_dissatisfied,
+                                color: Colors.grey[300], size: 64),
+                          Text(
+                            '购物车空空如也',
+                            style: TextStyle(
+                                fontSize: ScreenUtil().setSp(40),
+                                color: Colors.grey[300]),
+                          )
+                        ],
+                      ),
                     );
                   }
                 },
