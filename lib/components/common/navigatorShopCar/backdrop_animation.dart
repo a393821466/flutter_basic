@@ -14,6 +14,7 @@ class RippleBackdropAnimatePage extends StatefulWidget {
     this.duration = 300,
     this.blurRadius = 15.0,
     this.bottomButton,
+    this.colors = Colors.grey,
     this.bottomHeight = kBottomNavigationBarHeight,
     this.bottomButtonRotate = true,
     this.bottomButtonRotateDegree = 45.0,
@@ -48,6 +49,8 @@ class RippleBackdropAnimatePage extends StatefulWidget {
   /// 45.0 is by default.
   final double bottomButtonRotateDegree;
 
+  // The Color,default color grey[100]
+  final Color colors;
   @override
   _RippleBackdropAnimatePageState createState() =>
       _RippleBackdropAnimatePageState();
@@ -253,7 +256,7 @@ class _RippleBackdropAnimatePageState extends State<RippleBackdropAnimatePage>
       return ClipRRect(
         borderRadius: BorderRadius.circular(r * 2),
         child: Container(
-          color: Colors.white,
+          color: widget.colors,
           child: Text(" "),
         ),
       );

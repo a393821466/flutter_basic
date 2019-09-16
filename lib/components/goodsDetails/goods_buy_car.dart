@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import '../common/navigatorShopCar/route_animate_lib.dart';
 import '../../store/shop_car_store.dart';
+import '../../config/dialog_utils.dart';
+import '../../views/shopCarPage/shopcar_page.dart';
 
 class GoodsBuyCar extends StatefulWidget {
   final getDetails;
@@ -11,6 +14,7 @@ class GoodsBuyCar extends StatefulWidget {
 }
 
 class _GoodsBuyCarState extends State<GoodsBuyCar> {
+  bool flat = true;
   @override
   void initState() {
     super.initState();
@@ -34,7 +38,23 @@ class _GoodsBuyCarState extends State<GoodsBuyCar> {
         child: Row(
           children: <Widget>[
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(TransparentRoute(
+                  builder: (context) => RippleBackdropAnimatePage(
+                    child: Provider.of<ShopCarStore>(context).getShopCarStatus
+                        ? ShopCarPage()
+                        : Text(''),
+                    childFade: true,
+                    duration: 300,
+                    blurRadius: 0.0,
+                    colors: Colors.grey[500],
+                    bottomButton: Icon(Icons.close),
+                    bottomHeight: ScreenUtil().setHeight(120),
+                    bottomButtonRotate: false,
+                  ),
+                ));
+                Provider.of<ShopCarStore>(context).changeShopCarStatus(true);
+              },
               child: Container(
                 width: ScreenUtil().setWidth(110),
                 alignment: Alignment.center,
@@ -47,8 +67,17 @@ class _GoodsBuyCarState extends State<GoodsBuyCar> {
             ),
             InkWell(
               onTap: () async {
-                await Provider.of<ShopCarStore>(context)
-                    .saveCarData(goodsId, goodsName, count, price, images);
+                if (flat) {
+                  flat = false;
+                  await Provider.of<ShopCarStore>(context)
+                      .saveCarData(goodsId, goodsName, count, price, images)
+                      .then((res) {
+                    if (res == null) {
+                      DialogUtils().showToastDialog('已加入购物车');
+                      flat = true;
+                    }
+                  });
+                }
               },
               child: Container(
                 alignment: Alignment.center,

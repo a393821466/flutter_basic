@@ -102,10 +102,13 @@ class _NavigatorListPageState extends State<NavigatorListPage>
   _shopCarClick() {
     Navigator.of(context).push(TransparentRoute(
       builder: (context) => RippleBackdropAnimatePage(
-        child: Provider.of<ShopCarStore>(context).getShopCarStatus?ShopCarPage():Text(''),
+        child: Provider.of<ShopCarStore>(context).getShopCarStatus
+            ? ShopCarPage()
+            : Text(''),
         childFade: true,
         duration: 300,
         blurRadius: 0.0,
+        colors: Colors.grey[500],
         bottomButton: Icon(Icons.close),
         bottomHeight: ScreenUtil().setHeight(120),
         bottomButtonRotate: false,
@@ -125,8 +128,7 @@ class _NavigatorListPageState extends State<NavigatorListPage>
         onTap: _handleTapNavigator,
       ),
       floatingActionButton: _floatingActionButtonCenter(),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: IndexedStack(
         index: currentIndex,
         children: pages,
