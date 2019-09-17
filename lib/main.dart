@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import './routers/routes.dart'; // 引入路由配置文件
 import './routers/app_route_init.dart'; // 引入路由静态化文件
 import './components/common/navigator_list.dart';
+import './store/home_store.dart';
 import './store/classify_store.dart';
 import './store/shop_car_store.dart';
 import './store/goods_details_store.dart';
@@ -13,6 +14,7 @@ main() {
   Provider.debugCheckInvalidValueType = null;
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider<HomeStore>.value(value: HomeStore()),
       ChangeNotifierProvider<ClassifyStore>.value(value: ClassifyStore()),
       ChangeNotifierProvider<ShopCarStore>.value(value: ShopCarStore()),
       ChangeNotifierProvider<GoodsDetailsStore>.value(

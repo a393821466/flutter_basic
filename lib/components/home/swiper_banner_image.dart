@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import '../../store/home_store.dart';
 
-class SwiperBannerImage extends StatelessWidget{
-  final List swiperBannerList;
-  SwiperBannerImage({Key key, this.swiperBannerList}) : super(key: key);
+class SwiperBannerImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List data = Provider.of<HomeStore>(context).getHomeBanner;
     return Stack(
       children: <Widget>[
         Container(
-          height:ScreenUtil().setHeight(220),
+          height: ScreenUtil().setHeight(220),
           width: ScreenUtil().setWidth(750),
-          child:Swiper(
-            itemCount: swiperBannerList.length,
-            itemBuilder: (BuildContext context,int index){
-              return Image.network(swiperBannerList[index]['imgUrl'],fit:BoxFit.fill);
+          child: Swiper(
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Image.network(data[index].imgUrl, fit: BoxFit.fill);
             },
             pagination: SwiperPagination(),
             autoplay: true,
@@ -36,7 +37,6 @@ class SwiperBannerImage extends StatelessWidget{
     );
   }
 }
-
 
 // 弧度
 class OvalTopBorderClipper extends CustomClipper<Rect> {
