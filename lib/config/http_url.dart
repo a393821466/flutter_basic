@@ -1,10 +1,7 @@
-const baseUrl = 'http://66520.wang/mock/';
-
-const urlConfig = {
-  "homePage": baseUrl + "5d6f3c4e1934679bc56140bd/HomePage",
-  "annount": baseUrl + "5d6f3c4e1934679bc56140bd/annount",
-  "hotGoodsList": baseUrl + "5d6f3c4e1934679bc56140bd/HotGoodsList",
-  "classifyApi": baseUrl + "5d6f3c4e1934679bc56140bd/CategoryList",
-  "categoryGoodList": baseUrl + "5d6f3c4e1934679bc56140bd/CategoryGoodList",
-  "goodsDetails": baseUrl + "5d6f3c4e1934679bc56140bd/goodsDetails"
+const baseUrl = 'https://easy-mock.com/mock/';
+// ?sourch=mobileweb&action=autocomplete&contentType=json&keyword=长城
+const subUrl = 'https://m.ctrip.com/';
+const httpUrl = {
+  "bookList": baseUrl + '5d6109a5825d2b57ed75bbd6/example_copy/BookListApi',
+  "mapList": subUrl + 'restapi/h5api/searchapp/search'
 };
