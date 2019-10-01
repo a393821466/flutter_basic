@@ -9,6 +9,7 @@ import './store/classify_store.dart';
 import './store/shop_car_store.dart';
 import './store/goods_details_store.dart';
 import './store/currentIndex.dart';
+import './store/information_store.dart';
 
 main() {
   Provider.debugCheckInvalidValueType = null;
@@ -21,6 +22,7 @@ main() {
           value: GoodsDetailsStore()),
       ChangeNotifierProvider<CurrentIndexStore>.value(
           value: CurrentIndexStore()),
+      ChangeNotifierProvider<InformationStore>.value(value: InformationStore()),
     ],
     child: MyApp(),
   ));

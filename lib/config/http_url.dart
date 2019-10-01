@@ -6,5 +6,6 @@ const urlConfig = {
   "hotGoodsList": baseUrl + "5d6f3c4e1934679bc56140bd/HotGoodsList",
   "classifyApi": baseUrl + "5d6f3c4e1934679bc56140bd/CategoryList",
   "categoryGoodList": baseUrl + "5d6f3c4e1934679bc56140bd/CategoryGoodList",
-  "goodsDetails": baseUrl + "5d6f3c4e1934679bc56140bd/goodsDetails"
+  "goodsDetails": baseUrl + "5d6f3c4e1934679bc56140bd/goodsDetails",
+  "information": baseUrl + "5d6f3c4e1934679bc56140bd/information"
 };
